@@ -1,0 +1,13 @@
+{
+  "name": "estenrye Go Build and Test Workflow",
+  "description": "Go Build and Test starter workflow.",
+  "iconName": "example-icon",
+  "categories": [
+      "Go"
+  ],
+  "filePatterns": [
+      "go.mod$",
+      "go.sum$",
+      "Dockerfile"
+  ]
+}
