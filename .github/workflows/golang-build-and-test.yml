@@ -9,19 +9,6 @@ on:
       golang_version:
         type: string
         default: '1.20.6'
-      docker_context:
-        type: string
-        default: '.'
-      image_name:
-        required: true
-        type: string
-      tag:
-        type: string
-    secrets:
-      registry_username:
-        required: true
-      registry_password:
-        required: true
 
 jobs:
   build-and-test:
