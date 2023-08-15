@@ -1,0 +1,41 @@
+---
+name: golang
+on:
+  workflow_call:
+    inputs:
+      runs_on:
+        type: string
+        default: 'ubuntu-latest'
+      golang_version:
+        type: string
+        default: '1.20.6'
+      docker_context:
+        type: string
+        default: '.'
+      image_name:
+        required: true
+        type: string
+      tag:
+        type: string
+    secrets:
+      registry_username:
+        required: true
+      registry_password:
+        required: true
+
+jobs:
+  build-and-test:
+    runs-on: ${{ inputs.runs_on }}
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Golang
+        uses: actions/setup-go@v4
+        with:
+          go-version: ${{ inputs.golang_version }}
+     
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
