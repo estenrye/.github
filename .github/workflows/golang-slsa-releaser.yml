@@ -46,7 +46,7 @@ jobs:
     uses: slsa-framework/slsa-github-generator/.github/workflows/builder_go_slsa3.yml@v1.7.0
     with:
       go-version: ${{ inputs.golang_version }}
-      config-file: https://raw.githubusercontent.com/estenrye/.github/main/.slsa-goreleaser/${{matrix.os}}-${{matrix.arch}}.yml
+      config-file: .slsa-goreleaser/${{matrix.os}}-${{matrix.arch}}.yml
         # =============================================================================================================
         #     Optional: For more options, see https://github.com/slsa-framework/slsa-github-generator#golang-projects
         # =============================================================================================================
