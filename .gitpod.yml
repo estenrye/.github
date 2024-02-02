@@ -1,0 +1,7 @@
+vscode:
+  extensions:
+    - github.vscode-github-actions
+    - GitHub.copilot
+    - GitHub.copilot-chat
+    - joaompinto.vscode-graphviz
+    - EFanZh.graphviz-preview
