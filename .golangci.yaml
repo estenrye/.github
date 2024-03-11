@@ -1,0 +1,83 @@
+# golangci-lint config
+linters-settings:
+  depguard:
+    rules:
+      prevent_unmaintained_packages:
+        list-mode: lax # allow unless explicitely denied
+        files:
+          - $all
+          - "!$test"
+        allow:
+          - $gostd
+        deny:
+          - pkg: io/ioutil
+            desc: "replaced by io and os packages since Go 1.16: https://tip.golang.org/doc/go1.16#ioutil"
+  errcheck:
+    check-type-assertions: true
+  goconst:
+    min-len: 2
+    min-occurrences: 3
+  gocritic:
+    enabled-tags:
+      - diagnostic
+      - experimental
+      - opinionated
+      - performance
+      - style
+  govet:
+    check-shadowing: true
+    enable:
+      - fieldalignment
+  nolintlint:
+    require-explanation: true
+    require-specific: true
+
+linters:
+  disable-all: true
+  enable:
+    # default linters
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - unused
+    # optional linters
+    - depguard
+    - dogsled
+    - durationcheck
+    - errchkjson
+    - errname
+    - errorlint
+    - exportloopref
+    - forcetypeassert
+    - gochecknoglobals
+    - goconst
+    - gocritic
+    - gocyclo
+    - godox
+    - gofmt
+    - goimports
+    - gomnd
+    - gosec
+    - misspell
+    - musttag
+    - nakedret
+    - nolintlint
+    - nilerr
+    - nilnil
+    - nonamedreturns
+    - prealloc
+    - predeclared
+    - revive
+    - stylecheck
+    - tagalign
+    - thelper
+    - tparallel
+    - unconvert
+    - unparam
+    - whitespace
+    - wsl
+
+run:
+  issues-exit-code: 1
