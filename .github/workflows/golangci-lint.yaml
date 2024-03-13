@@ -16,7 +16,7 @@ on:
         default: '1.22.x'
       golangci_lint_config_path:
         type: string
-        default: '.action-config/.golangci.yml'
+        default: '.action-config/.golangci.yaml'
     secrets:
       github_token:
         description: 'GITHUB_TOKEN'
@@ -32,16 +32,20 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Pull config from .github repository.
+        uses: actions/checkout@v4
+        if: inputs.golangci_lint_config_path == '.action-config/.golangci.yaml'
         with:
           ref: ${{ inputs.action_config_ref }}
           path: .action-config
           repository: ${{ inputs.action_config_repostory }}
           token: ${{ secrets.github_token }}
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
         with:
           token: ${{ secrets.github_token }}
-      - uses: actions/setup-go@v5
+      - name: Install golang
+        uses: actions/setup-go@v5
         with:
           go-version: ${{ inputs.golang_version }}
           cache: false
