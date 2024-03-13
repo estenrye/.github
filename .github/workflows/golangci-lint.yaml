@@ -32,6 +32,11 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.token }}
+
       - name: Pull config from .github repository.
         uses: actions/checkout@v4
         if: inputs.golangci_lint_config_path == '.action-config/.golangci.yaml'
@@ -39,11 +44,6 @@ jobs:
           ref: ${{ inputs.action_config_ref }}
           path: .action-config
           repository: ${{ inputs.action_config_repostory }}
-          token: ${{ secrets.token }}
-
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
           token: ${{ secrets.token }}
 
       - name: Install Go
