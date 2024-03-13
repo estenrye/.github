@@ -46,6 +46,9 @@ jobs:
           repository: ${{ inputs.action_config_repostory }}
           token: ${{ secrets.token }}
 
+      - name: Echo golangci-lint configuration
+        run: cat ${{github.workspace}}/${{ inputs.golangci_lint_config_path }}
+
       - name: Install Go
         uses: actions/setup-go@v5
         with:
