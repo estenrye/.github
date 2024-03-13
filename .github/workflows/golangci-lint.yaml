@@ -5,12 +5,18 @@ on:
       # runs_on:
       #   type: string
       #   default: 'ubuntu-latest'
+      action_config_repostory:
+        type: string
+        default: 'https://github.com/estenrye/.github'
+      action_config_ref:
+        type: string
+        default: 'main'
       golang_version:
         type: string
         default: '1.22.x'
-      golangci_lint_config:
+      golangci_lint_config_path:
         type: string
-        default: 'https://raw.githubusercontent.com/estenrye/.github/main/.golangci.yaml'
+        default: '.action-config/.golangci.yml'
 
 permissions:
   contents: read
@@ -22,6 +28,11 @@ jobs:
     name: lint
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.action_config_ref }}
+          path: .action-config
+          repository: ${{ inputs.action_config_repostory }}
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
