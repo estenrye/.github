@@ -33,6 +33,7 @@ jobs:
           ref: ${{ inputs.action_config_ref }}
           path: .action-config
           repository: ${{ inputs.action_config_repostory }}
+          github-server-url: https://github.com
       - uses: actions/checkout@v4
       - uses: actions/setup-go@v5
         with:
