@@ -40,9 +40,12 @@ jobs:
           path: .action-config
           repository: ${{ inputs.action_config_repostory }}
           token: ${{ secrets.token }}
+      - name: Echo .action-config/.golangci.yaml
+        run: cat .action-config/.golangci.yaml
       - name: Checkout
         uses: actions/checkout@v4
         with:
+          path: s
           token: ${{ secrets.token }}
       - name: Install golang
         uses: actions/setup-go@v5
@@ -58,7 +61,7 @@ jobs:
           version: v1.56.2
 
           # Optional: working directory, useful for monorepos
-          # working-directory: somedir
+          working-directory: s
 
           # Optional: golangci-lint command line arguments.
           #
