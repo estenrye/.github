@@ -40,23 +40,19 @@ jobs:
           path: .action-config
           repository: ${{ inputs.action_config_repostory }}
           token: ${{ secrets.token }}
-      - name: Echo .action-config/.golangci.yaml
-        run: cat .action-config/.golangci.yaml
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          path: s
           token: ${{ secrets.token }}
-      # - name: Install golang
-      #   uses: actions/setup-go@v5
-      #   with:
-      #     go-version: ${{ inputs.golang_version }}
-      #     cache: false
+
+      - name: Echo ${{ inputs.golangci_lint_config_path }}
+        run: cat ${{ inputs.golangci_lint_config_path }}
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4
         with:
           version: v1.56.2
-          working-directory: s
           args: --timeout=30m --config=${{github.workspace}}/${{ inputs.golangci_lint_config_path }}
           install-mode: "binary"
           # Optional: show only new issues if it's a pull request. The default value is `false`.
