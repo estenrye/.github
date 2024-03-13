@@ -49,6 +49,12 @@ jobs:
       - name: Echo ${{ inputs.golangci_lint_config_path }}
         run: cat ${{ inputs.golangci_lint_config_path }}
 
+      - name: Install Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ inputs.golang_version }}
+          cache: false
+
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v4
         with:
