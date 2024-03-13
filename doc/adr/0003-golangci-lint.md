@@ -28,7 +28,7 @@ jobs:
   go-lint:
     uses: estenrye/.github/.github/workflows/golangci-lint.yaml@v0.1.15
     secrets:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+      token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 How to launch this pipeline locally in your project.
