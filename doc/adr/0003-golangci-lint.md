@@ -29,6 +29,9 @@ jobs:
     uses: estenrye/.github/.github/workflows/golangci-lint.yaml@v0.1.15
     secrets:
       token: ${{ secrets.GITHUB_TOKEN }}
+    # with:
+    #   Override centrally managed .golangci.yaml configuration with a repository specific configuration.
+    #   golangci_lint_config_path: .golangci.yaml
 ```
 
 How to launch this pipeline locally in your project.
