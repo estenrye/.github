@@ -80,10 +80,10 @@ jobs:
         id: build
         with:
           context: ${{ inputs.context }}
-          tags: 
-            - ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }}
-            - ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:latest
-            - ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ github.sha }}
+          tags: |-
+            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }},
+            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:latest,
+            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ github.sha }}
           push: ${{ inputs.push }}
           build-args: ${{ inputs.build_args }}
           platforms: ${{ inputs.platforms }}
