@@ -3,9 +3,15 @@ name: Docker Multiarch SLSA Releaser
 on:
   workflow_call:
     inputs:
+      oci_registry_provider:
+        type: string
+        default: "docker.io"
+      oci_registry_name:
+        type: string
+        default: ${{ github.repository_owner }}
       image_name:
         type: string
-        required: true
+        default: ${{ github.event.repository.name }}
       runs_on:
         type: string
         default: 'ubuntu-latest'
@@ -47,9 +53,7 @@ jobs:
       contents: read
       packages: write
     outputs:
-      image: "${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ inputs.image_name }}"
-      image_username: ${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}
-      image_password: ${{ steps.load_secret.outputs.IMAGE_REGISTRY_PASSWORD }}
+      image: "${{ inputs.oci_registry_provider }}/${{ inputs.oci_registry_name }}/${{ inputs.image_name }}"
       digest: ${{ steps.build.outputs.digest }}
     runs-on: ${{ inputs.runs_on }}
     steps:
@@ -58,7 +62,6 @@ jobs:
         uses: 1password/load-secrets-action@v4
         env:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
-          IMAGE_REGISTRY: ${{ inputs.op_item_path_container_registry_url }}
           IMAGE_REGISTRY_USERNAME: ${{ inputs.op_item_path_container_registry_username }}
           IMAGE_REGISTRY_PASSWORD: ${{ inputs.op_item_path_container_registry_password }}
 
@@ -81,9 +84,9 @@ jobs:
         with:
           context: ${{ inputs.context }}
           tags: |-
-            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ inputs.tag }},
-            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:latest,
-            ${{ steps.load_secret.outputs.IMAGE_REGISTRY }}/${{ steps.load_secret.outputs.IMAGE_REGISTRY_USERNAME }}/${{ inputs.image_name }}:${{ github.sha }}
+            ${{ inputs.oci_registry_provider }}/${{ inputs.oci_registry_name }}/${{ inputs.image_name }}:${{ inputs.tag }},
+            ${{ inputs.oci_registry_provider }}/${{ inputs.oci_registry_name }}/${{ inputs.image_name }}:latest,
+            ${{ inputs.oci_registry_provider }}/${{ inputs.oci_registry_name }}/${{ inputs.image_name }}:${{ github.sha }}
           push: ${{ inputs.push }}
           build-args: ${{ inputs.build_args }}
           platforms: ${{ inputs.platforms }}
@@ -96,13 +99,12 @@ jobs:
       actions: read # for detecting the Github Actions environment.
       id-token: write # for creating OIDC tokens for signing.
       packages: write # for uploading attestations.
-    uses: slsa-framework/slsa-github-generator/.github/workflows/generator_container_slsa3.yml@v2.1.0
+    uses: estenrye/.github/.github/workflows/generator_container_slsa3.yml@main
     with:
       image: ${{ needs.build.outputs.image }}
       digest: ${{ needs.build.outputs.digest }}
-      registry-username: ${{ needs.build.outputs.image_username }}
     secrets:
-      registry-password: ${{ needs.build.outputs.image_password }}
+      OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
   notify:
     needs: [build, provenance]
