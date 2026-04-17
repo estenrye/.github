@@ -115,7 +115,7 @@ jobs:
       OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
   notify:
-    needs: [build, provenance]
+    needs: [build]
     runs-on: ${{ inputs.runs_on }}
     steps:
       - name: Load secrets
