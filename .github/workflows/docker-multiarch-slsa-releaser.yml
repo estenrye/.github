@@ -26,16 +26,16 @@ on:
         default: ${{ github.ref_name }}
       op_item_path_notification_webhook:
         type: string
-        default: "op://Home_Lab/Discord-Webhooks/github-actions-bot"
+        default: "op://wvraeffbmpocy5jpzwgyerj3qi/mhvxjb5ebu2hglxmzyhwjym3eq/github-actions-bot"
       op_item_path_container_registry_username:
         type: string
-        default: "op://Home_Lab/docker-io-registry-pat-github-actions/username"
+        default: "op://wvraeffbmpocy5jpzwgyerj3qi/hcpvtx4e3bnw4kxzeb4qpxuseq/username"
       op_item_path_container_registry_password:
         type: string
-        default: "op://Home_Lab/docker-io-registry-pat-github-actions/password"
+        default: "op://wvraeffbmpocy5jpzwgyerj3qi/hcpvtx4e3bnw4kxzeb4qpxuseq/password"
       op_item_path_container_registry_url:
         type: string
-        default: "op://Home_Lab/docker-io-registry-pat-github-actions/url"
+        default: "op://wvraeffbmpocy5jpzwgyerj3qi/hcpvtx4e3bnw4kxzeb4qpxuseq/url"
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN:
         required: true
