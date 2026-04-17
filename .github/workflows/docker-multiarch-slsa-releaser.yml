@@ -42,6 +42,12 @@ on:
       op_item_path_container_registry_url:
         type: string
         default: "op://wvraeffbmpocy5jpzwgyerj3qi/hcpvtx4e3bnw4kxzeb4qpxuseq/url"
+      private_registry:
+        type: boolean
+        default: false
+      provenance_generation:
+        type: boolean
+        default: false
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN:
         required: true
@@ -94,6 +100,7 @@ jobs:
   # This step calls the container workflow to generate provenance and push it to
   # the container registry.
   provenance:
+    if: ${{ inputs.provenance_generation }}
     needs: [build]
     permissions:
       actions: read # for detecting the Github Actions environment.
@@ -103,6 +110,7 @@ jobs:
     with:
       image: ${{ needs.build.outputs.image }}
       digest: ${{ needs.build.outputs.digest }}
+      private_registry: ${{ inputs.private_registry }}
     secrets:
       OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
 
