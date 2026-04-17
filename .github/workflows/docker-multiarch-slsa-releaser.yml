@@ -99,7 +99,7 @@ jobs:
       actions: read # for detecting the Github Actions environment.
       id-token: write # for creating OIDC tokens for signing.
       packages: write # for uploading attestations.
-    uses: estenrye/.github/.github/workflows/generator_container_slsa3.yml@main
+    uses: ./generator_container_slsa3.yml
     with:
       image: ${{ needs.build.outputs.image }}
       digest: ${{ needs.build.outputs.digest }}
